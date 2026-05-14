@@ -2,12 +2,14 @@ package aston.intensiv.notificationservice.model;
 
 import aston.intensiv.notificationservice.service.Operation;
 import jakarta.persistence.*;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Entity
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class NotificationMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
