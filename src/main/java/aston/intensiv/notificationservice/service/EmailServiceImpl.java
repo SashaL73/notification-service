@@ -1,10 +1,10 @@
 package aston.intensiv.notificationservice.service;
 
 import aston.intensiv.notificationservice.dto.EmailRequest;
+import aston.intensiv.notificationservice.mapper.SimpleMailMessageMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -29,10 +29,9 @@ public class EmailServiceImpl implements EmailService{
                 .message(message)
                 .build();
 
-        SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setTo(email);
-        simpleMailMessage.setText(message);
-        mailSender.send(simpleMailMessage);
+        mailSender.send(SimpleMailMessageMapper.mapToSimpleMailMessage(
+                email, message
+        ));
 
         log.info("отправка сообщения на эндпоинт user-service {}", emailRequest);
         template.postForObject(path, emailRequest, Void.class);
